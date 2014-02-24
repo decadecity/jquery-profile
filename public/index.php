@@ -21,6 +21,17 @@ var browser = ua.getBrowser();
 <pre><script>
 document.write('jQuery version: ' + $().jquery + '\n');
 document.write('Parse time: ' + (t_end - t_start) + 'ms');
+
+$.ajax({
+    url: 'logger.php',
+    type: 'post',
+    dataType: 'json',
+    data: JSON.stringify({
+      'jquery': $().jquery,
+      'parse_time': t_end - t_start,
+      'browser': ua.getResult()
+    })
+});
 </script>
 
 </pre>
