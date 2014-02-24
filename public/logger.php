@@ -28,7 +28,7 @@ function error($code) {
 if (!isset($_SERVER['REQUEST_METHOD'])) {
   error(500);
 } else if (in_array($_SERVER['REQUEST_METHOD'], array('GET', 'POST'))) {
-  $request = $_GET;
+  // Pass
 } else {
   error(405);
 }
@@ -49,7 +49,5 @@ if (!file_exists($data_file)) {
 $data = json_decode($data);
 $data[] = $incoming;
 file_put_contents($data_file, json_encode($data, JSON_PRETTY_PRINT));
-
-//var_dump($incoming);
 
 ?>
