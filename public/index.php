@@ -8,6 +8,8 @@ if (isset($_GET['v'])) {
 }
 ?>
 <head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1"/>
   <title>jQuery parse time</title>
   <script src="./jquery/jquery-<?php echo $version ?>.min.js"></script>
 </head>
@@ -19,10 +21,16 @@ if (isset($_GET['v'])) {
     <input type="submit" value="Go"/>
   </form>
 
+  <pre>
+    <span id="result"></span>
+    Logging status: <span id="status">Not started</span>
+  </pre>
+
   <script src="./lib/ua_parser.js"></script>
   <script src="./lib/cookies.js"></script>
   <script>
 var ua = new UAParser;
+var status_message = $('#status');
 
 var device = $('#device').val();
 if (!device && DECADE_CITY.COOKIES.hasItem('device')) {
@@ -45,11 +53,20 @@ if (device) {
       'parse_time': t_end - t_start,
       'browser': ua.getResult(),
       'device': device
-    })
+    }),
+    beforeSend: function () {
+      status_message.html('Sending');
+    },
+    success: function () {
+      status_message.html('Sent');
+    },
+    error: function () {
+      status_message.html('Failed');
+    }
   });
 }
+
+$('#result').html('Time taken to parse jQuery: ' + (t_end - t_start) + 'ms');
+
   </script>
-<pre><script>
-document.write('Time taken to parse jQuery: ' + (t_end - t_start) + 'ms');
-</script></pre>
 </body>
