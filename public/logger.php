@@ -48,7 +48,7 @@ if (!file_exists($data_file)) {
 }
 $data = json_decode($data);
 $data[] = $incoming;
-file_put_contents($data_file, json_encode($data, JSON_PRETTY_PRINT));
+file_put_contents($data_file, json_encode($data));
 print('true');
 
 ?>
