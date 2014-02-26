@@ -34,5 +34,7 @@ for device in tests.itervalues():
             a = np.array(data_points)
             results['mean'] = np.mean(a, dtype=np.float64)
             results['sigma'] = np.std(a, dtype=np.float64)
+            results['number'] = len(data_points)
+            del results['data']
 
 pprint(tests)
