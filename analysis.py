@@ -12,6 +12,14 @@ tests = {}
 
 for d in data:
     device = tests.get(d['device'], {})
+    try:
+        _ = d['browser']['browser']['name']
+    except TypeError:
+        d['browser'] = {
+            'browser': {
+                'name': 'System'
+            }
+        }
     browser = device.get(d['browser']['browser']['name'], {})
     version = browser.get(d['jquery'], {})
     data_points = version.get('data', [])
@@ -22,14 +30,11 @@ for d in data:
     device[d['browser']['browser']['name']] = browser
     tests[d['device']] = device
 
-#pprint(tests)
-
 results = {}
 
 for device in tests.itervalues():
     for browser in device.itervalues():
         for version, results in browser.items():
-            #pprint(results)
             data_points = results['data']
             a = np.array(data_points)
             results['mean'] = np.mean(a, dtype=np.float64)
